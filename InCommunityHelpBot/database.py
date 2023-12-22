@@ -86,6 +86,7 @@ CREATE TABLE IF NOT EXISTS ch (
   ch_navigation BLOB,
   ch_url TEXT,
   ch_prayer_time TEXT,
+  ch_phone TEXT,
   ch_comment TEXT,
   abbot_id INTEGER,
   FOREIGN KEY (abbot_id) REFERENCES abbots (id),
@@ -124,116 +125,38 @@ CREATE TABLE IF NOT EXISTS cars (
 );
 """
 
-create_ch = """
-INSERT INTO
-  ch (ch_name, ch_address, ch_how_get, ch_navigation, ch_url, ch_prayer_time, ch_comment, abbot_id)
-VALUES
-  ('Рождества Иоанна Предтечи на Пресне', '', 'male', 'USA'),
-  ('Вмц. Ирины на Бауманской', 32, 'female', 'France'),
-  ('Флора и Лавра на Павелецкой', 35, 'female', 'England'),
-  ('Mike', 40, 'male', 'Denmark'),
-  ('Elizabeth', 21, 'female', 'Canada');
-"""
+# insert_ch = """
+# INSERT INTO
+#   ch (ch_name, ch_address, ch_how_get, ch_navigation, ch_url, ch_prayer_time, ch_phone, ch_comment, abbot_id)
+# VALUES
+#   ('Рождества Иоанна Предтечи на Пресне', 'м. Краснопресненская, Малый Предтеченский переулок, д. 2', 'Выход 1 из метро',
+#   '/Users/aakorneev/Documents/AK/Bot/IoannPr_how_to_get.jpg',
+#   'https://ioannpr.ru/raspisanie-bogosluzhenij', '09:30', '+7-499-255-65-72', '', 1);
+# """
 
-create_users = """
-INSERT INTO
-  users (name, age, gender, nationality)
-VALUES
-  ('James', 25, 'male', 'USA'),
-  ('Leila', 32, 'female', 'France'),
-  ('Brigitte', 35, 'female', 'England'),
-  ('Mike', 40, 'male', 'Denmark'),
-  ('Elizabeth', 21, 'female', 'Canada');
-"""
+# insert_abb = """
+# INSERT INTO
+#   abbots (abbot_name, abbot_rank)
+# VALUES
+#   ('Антоний (Севрюк)', 'митр. ');
+# """
 
-create_posts = """
-INSERT INTO
-  posts (title, description, user_id)
-VALUES
-  ("Happy", "I am feeling very happy today", 1),
-  ("Hot Weather", "The weather is very hot today", 2),
-  ("Help", "I need some help with my work", 2),
-  ("Great News", "I am getting married", 1),
-  ("Interesting Game", "It was a fantastic game of tennis", 5),
-  ("Party", "Anyone up for a late-night party today?", 3);
-"""
+select_ch = "SELECT * FROM ch JOIN abbots ON ch.abbot_id = abbots.id;"
+select_abbot = "SELECT * FROM abbots;"
 
-create_comments = """
-INSERT INTO
-  comments (text, user_id, post_id)
-VALUES
-  ('Count me in', 1, 6),
-  ('What sort of help?', 5, 3),
-  ('Congrats buddy', 2, 4),
-  ('I was rooting for Nadal though', 4, 5),
-  ('Help with your thesis?', 2, 3),
-  ('Many congratulations', 5, 4);
-"""
+connection = create_connection("/Users/aakorneev/PycharmProjects/AlexxanderKorn/InCommunityHelpBot/info_bot.sqlite")
 
-create_likes = """
-INSERT INTO
-  likes (user_id, post_id)
-VALUES
-  (1, 6),
-  (2, 3),
-  (1, 5),
-  (5, 4),
-  (2, 4),
-  (4, 2),
-  (3, 6);
-"""
+# query_execute(connection, create_table_ch)
+# query_execute(connection, create_table_abbots)
 
-select_users = "SELECT * FROM users"
+# query_execute(connection, insert_ch)
+# query_execute(connection, insert_abb)
 
-connection = create_connection("/Users/aakorneev/Projects/Test/sm_app.sqlite")
+ch = execute_read_query(connection, select_ch)
+for i in ch:
+    print(i)
 
-query_execute(connection, create_table_users)
-query_execute(connection, create_table_posts)
-query_execute(connection, create_table_comments)
-query_execute(connection, create_table_likes)
-
-query_execute(connection, create_users)
-query_execute(connection, create_posts)
-query_execute(connection, create_comments)
-query_execute(connection, create_likes)
-
-users = execute_read_query(connection, select_users)
-for user in users:
-    print(user)
-
-select_posts = "SELECT * FROM posts"
-posts = execute_read_query(connection, select_posts)
-
-select_users_posts = """
-SELECT
-  users.id,
-  users.name,
-  posts.description
-FROM
-  posts
-  INNER JOIN users ON users.id = posts.user_id
-"""
-
-users_posts = execute_read_query(connection, select_users_posts)
-
-for users_post in users_posts:
-    print(users_post)
-
-select_posts_comments_users = """
-SELECT
-  posts.description as post,
-  text as comment,
-  name
-FROM
-  posts
-  INNER JOIN comments ON posts.id = comments.post_id
-  INNER JOIN users ON users.id = comments.user_id
-"""
-
-posts_comments_users = execute_read_query(
-    connection, select_posts_comments_users
-)
-
-for posts_comments_user in posts_comments_users:
-    print(posts_comments_user)
+# abbot = execute_read_query(connection, select_abbot)
+# for i in abbot:
+#     print(i)
 
