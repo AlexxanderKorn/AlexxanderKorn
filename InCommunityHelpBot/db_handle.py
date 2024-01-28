@@ -51,8 +51,6 @@ def update_table(connection, query):
             print("Connection to SQLite is closed")
 
 
-
-
 # create_table_ch = """
 # CREATE TABLE IF NOT EXISTS ch (
 #   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -82,14 +80,16 @@ def update_table(connection, query):
 # create_table_people = """
 # CREATE TABLE IF NOT EXISTS people (
 #   id INTEGER PRIMARY KEY AUTOINCREMENT,
-#   p_abbr TEXT NOT NULL,
+#   p_id_name TEXT NOT NULL,
+#   p_name TEXT NOT NULL,
 #   p_address TEXT,
+#   p_phone TEXT,
 #   p_how_get TEXT,
 #   p_navigation BLOB,
 #   car_id INTEGER,
 #   ch_comment TEXT,
 #   FOREIGN KEY (car_id) REFERENCES cars (id),
-#   UNIQUE (id, p_abbr)
+#   UNIQUE (id, p_id_name)
 # );
 # """
 #
@@ -101,10 +101,11 @@ def update_table(connection, query):
 # );
 # """
 
+
 connection = create_connection("/Users/aakorneev/PycharmProjects/AlexxanderKorn/InCommunityHelpBot/info_bot.sqlite")
 
-# execute_query(connection, create_table_ch)
-# execute_query(connection, create_table_abbots)
+# execute_query(connection, create_table_people)
+# execute_query(connection, create_table_cars)
 
 # execute_query(connection, insert_ch)
 # execute_query(connection, insert_abb)
@@ -112,12 +113,12 @@ connection = create_connection("/Users/aakorneev/PycharmProjects/AlexxanderKorn/
 # execute_query(connection, update_table_ch)
 # execute_query(connection, update_table_abbot)
 
-select_ch = "SELECT * FROM ch JOIN abbots ON ch.abbot_id = abbots.id;"
+# select_ch = "SELECT * FROM ch JOIN abbots ON ch.abbot_id = abbots.id;"
 # select_abbot = "SELECT * FROM abbots;"
 
-ch = execute_read_query(connection, select_ch)
-for i in ch:
-    print(i)
+# ch = execute_read_query(connection, select_ch)
+# for i in ch:
+#     print(i)
 
 # abbot = execute_read_query(connection, select_abbot)
 # for i in abbot:

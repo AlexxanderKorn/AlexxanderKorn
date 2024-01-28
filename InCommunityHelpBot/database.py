@@ -34,12 +34,26 @@ class Database:
         self.conn = connection
         self.cursor = self.conn.cursor()
 
+    def p_access(self):
+        p_names = execute_read_query(connection,
+                                     f"""SELECT p_contact FROM people""")[0]
+        print(p_names)
+
+        return p_names
+
     def ch_info(self, ch_name):
         select_ch = f"""SELECT * FROM ch JOIN abbots a ON ch.abbot_id = a.id
         WHERE ch.ch_id_name = '{ch_name}'"""
         ch = execute_read_query(connection, select_ch)
 
         return ch
+
+    def people_info(self, p_name):
+        select_p = f"""SELECT * FROM people p JOIN cars c ON p.car_id = c.id
+        WHERE p.p_id_name = '{p_name}'"""
+        people = execute_read_query(connection, select_p)
+
+        return people
 
     def bot_buttons(self, table):
         rec_count = execute_read_query(connection, f"""SELECT COUNT(*) FROM '{table}'""")
@@ -48,18 +62,17 @@ class Database:
         for i in range(rec_count_formatted):
             i = i + 1
             if table == 'ch':
-                tab_values = execute_read_query(connection, f"""SELECT ch_id_name, ch_name FROM ch WHERE id = '{i}'""")[0]
+                tab_values = execute_read_query(connection,
+                                                f"""SELECT ch_id_name, ch_name FROM ch WHERE id = '{i}'""")[0]
             elif table == 'people':
-                tab_values = execute_read_query(connection, f"""SELECT p_abbr FROM ch WHERE id = '{i}'""")[
-                    0]
+                tab_values = execute_read_query(connection,
+                                                f"""SELECT p_id_name, p_name FROM people WHERE id = '{i}'""")[0]
             else:
                 raise ValueError(f'Table {table} is not defined')
             buttons_names.update({tab_values[0]: tab_values[1]})
-        # print(buttons_names)
-        return buttons_names
 
+        return buttons_names
 
 # database = Database()
 
 # ch_buttons_set('ch')
-
