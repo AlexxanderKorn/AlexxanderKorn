@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8793ded5-293b-494a-8343-690200d0b6c8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InCommunityHelpBot/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/InCommunityHelpBot/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InCommunityHelpBot/db_conn.txt" beforeDir="false" afterPath="$PROJECT_DIR$/InCommunityHelpBot/db_conn.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InCommunityHelpBot/db_handle.py" beforeDir="false" afterPath="$PROJECT_DIR$/InCommunityHelpBot/db_handle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InCommunityHelpBot/info_bot.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/InCommunityHelpBot/info_bot.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InCommunityHelpBot/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/InCommunityHelpBot/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,19 +32,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;info__dev__main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/aakorneev/PycharmProjects/AlexxanderKorn/InCommunityHelpBot&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "info__dev__main",
+    "last_opened_file_path": "/Users/aakorneev/PycharmProjects/AlexxanderKorn"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;Python&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "Python"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/InCommunityHelpBot" />

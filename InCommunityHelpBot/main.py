@@ -57,11 +57,11 @@ def ch_data_set(ch_d: str):
 def people_data_set(people_d: str):
     p_data = (database.people_info(people_d)[0])
     p_car = f'<b>Авто:</b><i>    {p_data[10]}  {p_data[11]}</i>' if (p_data[7]) != 0 else ''
-    contact = f'<i>{p_data[4]}</i>' if p_data[4] else ''
-    comment = f'<b>Коммент:</b><i>    {p_data[8]}</i>' if p_data[8] else ''
+    contact = f'<i>(@{p_data[4]})</i>' if p_data[4] else ''
+    comment = f'<b>!!!:</b><i>    {p_data[8]}</i>' if p_data[8] else ''
 
     p_set = (
-        f'<b>{p_data[2]}</b> (@{contact})\n\n'
+        f'<b>{p_data[2]}</b> {contact}\n\n'
         f'<u><b>Адрес:</b></u><i>   {p_data[3]}</i>\n\n'
         f'<b>Как добраться:</b><i> {p_data[5]}</i>\n\n'
         f'{comment}\n'
@@ -81,7 +81,7 @@ keyboard_back = InlineKeyboardMarkup([[button_back]])
 @InCommunityHelpBot.message_handler(commands=['start'])
 def start_bot(message):
     user_name = message.from_user.username
-    user_full_name = f"{message.from_user.first_name} {message.from_user.last_name}" if (message.from_user.first_name and message.from_user.last_name) else user_name
+    user_full_name = f"{message.from_user.first_name}" if (message.from_user.first_name and message.from_user.last_name) else user_name
     start_mess = f"<b>{user_full_name}</b>, привет!\nЧто хотелось бы узнать?"
 
     InCommunityHelpBot.send_message(message.chat.id, start_mess, parse_mode='html', reply_markup=main_keyboard)
@@ -89,7 +89,7 @@ def start_bot(message):
 
 
 @InCommunityHelpBot.callback_query_handler(func=lambda call: True)
-def response_first(call):
+def bot_interaction(call):
     info_ch_menu = bot_buttons_set('ch')
     ch_d = info_ch_menu[0]
     info_ch_keyboard = InlineKeyboardMarkup([info_ch_menu[1]])
@@ -145,4 +145,4 @@ if __name__ == '__main__':
 #
 # InCommunityHelpBot.remove_webhook()
 # InCommunityHelpBot.set_webhook('https://test.com/' + token)
-# app.run()run
+# app.run()

@@ -1,1 +1,1 @@
-6752058570:AAGjqet25MsYXdFCPfAUy-YZNTtdkw-Vai0
+/Users/aakorneev/PycharmProjects/AlexxanderKorn/InCommunityHelpBot/info_bot.sqlite
