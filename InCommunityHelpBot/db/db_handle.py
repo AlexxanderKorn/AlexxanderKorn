@@ -102,7 +102,7 @@ def update_table(connection, query):
 # """
 
 
-connection = create_connection("/Users/aakorneev/PycharmProjects/AlexxanderKorn/InCommunityHelpBot/info_bot.sqlite")
+connection = create_connection("/InCommunityHelpBot/info_bot.sqlite")
 
 # execute_query(connection, create_table_people)
 # execute_query(connection, create_table_cars)

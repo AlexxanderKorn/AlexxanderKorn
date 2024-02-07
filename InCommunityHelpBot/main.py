@@ -1,12 +1,7 @@
 import telebot
-# from flask import Flask, request
-from telebot import types
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, Update
-# from telebot.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, CallbackQueryHandler
-from telebot.util import quick_markup
-from urllib3.util import url
-# from termcolor import colored
-from database import Database
+
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+from InCommunityHelpBot.db.database import Database
 
 """
     . Запуск бота: python <имя py-файла>
@@ -15,7 +10,7 @@ from database import Database
 
 database = Database()
 
-with open('/Users/aakorneev/PycharmProjects/AlexxanderKorn/InCommunityHelpBot/bot_tok.txt') as f:
+with open('/Users/aakorneev/PycharmProjects/AlexxanderKorn/InCommunityHelpBot/db/bot_tok.txt') as f:
     token = f.read()
 
 InCommunityHelpBot = telebot.TeleBot(token)
@@ -23,10 +18,10 @@ InCommunityHelpBot = telebot.TeleBot(token)
 
 # app = Flask(__name__)
 
-def out_yellow(text):
-    pp = "\033[33m {}".format(text)
-
-    return pp
+# def out_yellow(text):
+#     pp = "\033[33m {}".format(text)
+#
+#     return pp
 
 
 def bot_buttons_set(table: str):
@@ -58,7 +53,7 @@ def people_data_set(people_d: str):
     p_data = (database.people_info(people_d)[0])
     p_car = f'<b>Авто:</b><i>    {p_data[10]}  {p_data[11]}</i>' if (p_data[7]) != 0 else ''
     contact = f'<i>(@{p_data[4]})</i>' if p_data[4] else ''
-    comment = f'<b>!!!:</b><i>    {p_data[8]}</i>' if p_data[8] else ''
+    comment = f'<b>!!!</b><i>    {p_data[8]}</i>' if p_data[8] else ''
 
     p_set = (
         f'<b>{p_data[2]}</b> {contact}\n\n'
@@ -81,7 +76,7 @@ keyboard_back = InlineKeyboardMarkup([[button_back]])
 @InCommunityHelpBot.message_handler(commands=['start'])
 def start_bot(message):
     user_name = message.from_user.username
-    user_full_name = f"{message.from_user.first_name}" if (message.from_user.first_name and message.from_user.last_name) else user_name
+    user_full_name = f"{message.from_user.first_name}" if message.from_user.first_name else user_name
     start_mess = f"<b>{user_full_name}</b>, привет!\nЧто хотелось бы узнать?"
 
     InCommunityHelpBot.send_message(message.chat.id, start_mess, parse_mode='html', reply_markup=main_keyboard)
@@ -143,6 +138,6 @@ if __name__ == '__main__':
 #     return "!", 200
 #
 #
-# InCommunityHelpBot.remove_webhook()
-# InCommunityHelpBot.set_webhook('https://test.com/' + token)
-# app.run()
+    InCommunityHelpBot.remove_webhook()
+    InCommunityHelpBot.set_webhook('https://test.com/' + token)
+    InCommunityHelpBot.delete_webhook()

@@ -1,3 +1,4 @@
+import os
 import sqlite3
 from sqlite3 import Error
 
@@ -24,7 +25,22 @@ def execute_read_query(connection, query):
     return result
 
 
-with open('/Users/aakorneev/PycharmProjects/AlexxanderKorn/InCommunityHelpBot/db_conn.txt') as db_f:
+# import pathlib
+# from pathlib import Path
+#
+# # Получаем строку, содержащую путь к рабочей директории:
+# dir_path = pathlib.Path.cwd()
+#
+# # os_path = os.path.abspath("db/db_")
+# # print(os_path)
+#
+# # Объединяем полученную строку с недостающими частями пути
+# db_conn_path = Path(dir_path, 'db_conn.txt')
+#
+# # выведем значение переменной path:
+# print(str(db_conn_path))
+
+with open('/Users/aakorneev/PycharmProjects/AlexxanderKorn/InCommunityHelpBot/db/db_conn.txt') as db_f:
     db_conn = db_f.read()
     connection = create_connection(db_conn)
 
