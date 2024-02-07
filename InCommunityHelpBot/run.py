@@ -3,11 +3,12 @@ from pathlib import Path
 
 from InCommunityHelpBot.main import InCommunityHelpBot, token
 
+InCommunityHelpBot.delete_webhook()
+
 if __name__ == '__main__':
     InCommunityHelpBot.polling(none_stop=True)
     # InCommunityHelpBot.infinity_polling()
 
-    # InCommunityHelpBot.remove_webhook()
     InCommunityHelpBot.delete_webhook()
     InCommunityHelpBot.set_webhook('https://test.com/' + token)
 
