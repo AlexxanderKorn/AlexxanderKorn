@@ -55,10 +55,22 @@
 
 ```
 source env/bin/activate
-export PROMETHEUS_PORT=9900
-export APP_NAME=model-orchestrator
-export APP_FLUENT_LOG_LEVEL=10
-export APP_FILE_LOG_LEVEL=10
-export APP_CONSOLE_LOG_LEVEL=10
 python orchestrator/engine/run.py -c configs/dev.yml
+```
+
+5. Создать Docker образ и запустить / остановить его
+
+```
+cd /Users/aakorneev/PycharmProjects/AlexxanderKorn 
+vim ~/.docker/config.json 
+Здесь:
+Delete the line with credsStore from ~/.docker/config.json.
+Or rename credsStore to credStore
+
+docker build -t info_bot_app .
+
+docker run -d --restart=always info_bot_app
+docker run -d --restart=always info_bot_app --stop
+
+docker ps
 ```

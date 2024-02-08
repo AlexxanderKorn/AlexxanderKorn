@@ -16,14 +16,6 @@ with open('/Users/aakorneev/PycharmProjects/AlexxanderKorn/InCommunityHelpBot/db
 InCommunityHelpBot = telebot.TeleBot(token)
 
 
-# app = Flask(__name__)
-
-# def out_yellow(text):
-#     pp = "\033[33m {}".format(text)
-#
-#     return pp
-
-
 def bot_buttons_set(table: str):
     bot_buttons = (database.bot_buttons(table))
     sorted_dict = dict(sorted(bot_buttons.items(), key=lambda x: x[1]))
@@ -41,10 +33,10 @@ def ch_data_set(ch_d: str):
 
     ch_set = (
         f'<u><b>Храм:</b></u>    {ch_data[1]}\n'
-        f'<b>Настоятель:</b><i> {ch_data[12], ch_data[13]}</i>\n\n'
+        f'<b>Настоятель:</b><i>   {ch_data[12], ch_data[13]}</i>\n\n'
         f'<u><b>Адрес:</b></u><i>   {ch_data[2]}</i>\n'
-        f'<b>Как добраться:</b><i> {ch_data[3]}</i>\n\n'
-        f'<b>Начало богослужений:</b><i> {ch_data[6]}</i>\n'
+        f'<b>Как добраться:</b><i>   {ch_data[3]}</i>\n\n'
+        f'<b>Начало богослужений:</b><i>   {ch_data[6]}</i>\n'
         f'<b>Сайт:</b><i>    {ch_data[5]}</i>')
     return ch_set
 
@@ -58,7 +50,7 @@ def people_data_set(people_d: str):
     p_set = (
         f'<b>{p_data[2]}</b> {contact}\n\n'
         f'<u><b>Адрес:</b></u><i>   {p_data[3]}</i>\n\n'
-        f'<b>Как добраться:</b><i> {p_data[5]}</i>\n\n'
+        f'<b>Как добраться:</b><i>   {p_data[5]}</i>\n\n'
         f'{comment}\n'
         f'{p_car}'
     )
