@@ -1,4 +1,3 @@
-import os
 import sqlite3
 from sqlite3 import Error
 
@@ -24,23 +23,9 @@ def execute_read_query(connection, query):
         print(f"The error '{e}' has occurred")
     return result
 
+# /Users/aakorneev/PycharmProjects/AlexxanderKorn/InCommunityHelpBot/db_conn.txt
 
-# import pathlib
-# from pathlib import Path
-#
-# # Получаем строку, содержащую путь к рабочей директории:
-# dir_path = pathlib.Path.cwd()
-#
-# # os_path = os.path.abspath("db/db_")
-# # print(os_path)
-#
-# # Объединяем полученную строку с недостающими частями пути
-# db_conn_path = Path(dir_path, 'db_conn.txt')
-#
-# # выведем значение переменной path:
-# print(str(db_conn_path))
-
-with open('/Users/aakorneev/PycharmProjects/AlexxanderKorn/InCommunityHelpBot/db/db_conn.txt') as db_f:
+with open('/app/InCommunityHelpBot/db_conn.txt') as db_f:
     db_conn = db_f.read()
     connection = create_connection(db_conn)
 
@@ -53,7 +38,7 @@ class Database:
     def p_access(self):
         p_names = execute_read_query(connection,
                                      f"""SELECT p_contact FROM people""")[0]
-        print(p_names)
+        # print(p_names)
 
         return p_names
 
@@ -88,7 +73,3 @@ class Database:
             buttons_names.update({tab_values[0]: tab_values[1]})
 
         return buttons_names
-
-# database = Database()
-
-# ch_buttons_set('ch')

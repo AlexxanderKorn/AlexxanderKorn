@@ -48,7 +48,7 @@ coverage.xml
 *.cover
 *.py,cover
 .hypothesis/
-.pytest_cache/
+../.pytest_cache/
 cover/
 
 # Translations
@@ -139,7 +139,7 @@ cython_debug/
 
 # IDE
 .idea/
-workspace.xml
+.idea/workspace.xml
 .run/
 
 # Project
@@ -150,4 +150,13 @@ ssl/
 **/.DS_Store
 .DS_Store
 
-*.txt
+InCommunityHelpBot/bot_tok.txt
+
+# Игнорирование всех файлов в папке с пакетами
+**/site-packages/
+
+# Игнорирование файла requirements.txt
+requirements.txt
+
+# Игнорирование файла pipfile.lock
+pipfile.lock

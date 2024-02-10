@@ -1,12 +1,9 @@
-import pathlib
-from pathlib import Path
-
-from InCommunityHelpBot.main import InCommunityHelpBot, token
+from main import InCommunityHelpBot, token
 
 InCommunityHelpBot.delete_webhook()
 
 if __name__ == '__main__':
-    # InCommunityHelpBot.polling(none_stop=True)
+
     InCommunityHelpBot.infinity_polling(timeout=10, long_polling_timeout=5)
 
     InCommunityHelpBot.delete_webhook()

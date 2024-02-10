@@ -67,10 +67,11 @@ vim ~/.docker/config.json
 Delete the line with credsStore from ~/.docker/config.json.
 Or rename credsStore to credStore
 
-docker build -t info_bot_app .
+docker build -t bot_app .
 
-docker run -d --restart=always info_bot_app
-docker run -d --restart=always info_bot_app --stop
+docker run -d --name info-bot --restart=always bot_app
+docker run -d --restart=always bot_app
+docker run -d --restart=always bot_app --stop
 
 docker ps
 ```
