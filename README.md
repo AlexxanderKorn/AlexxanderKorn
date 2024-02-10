@@ -55,7 +55,7 @@
 
 ```
 source env/bin/activate
-python orchestrator/engine/run.py -c configs/dev.yml
+
 ```
 
 5. Создать Docker образ и запустить / остановить его
@@ -70,8 +70,8 @@ Or rename credsStore to credStore
 docker build -t bot_app .
 
 docker run -d --name info-bot --restart=always bot_app
-docker run -d --restart=always bot_app
-docker run -d --restart=always bot_app --stop
+docker rm info-bot
+docker rmi bot_app
 
-docker ps
+docker ps -a
 ```
