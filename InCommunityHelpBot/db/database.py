@@ -23,7 +23,12 @@ def execute_read_query(connection, query):
         print(f"The error '{e}' has occurred")
     return result
 
+
 # /Users/aakorneev/PycharmProjects/AlexxanderKorn/InCommunityHelpBot/db_conn.txt
+# /app/InCommunityHelpBot/db_conn.txt
+
+# /Users/aakorneev/PycharmProjects/AlexxanderKorn/InCommunityHelpBot/db/info_bot.sqlite
+# /app/InCommunityHelpBot/db/info_bot.sqlite
 
 with open('/app/InCommunityHelpBot/db_conn.txt') as db_f:
     db_conn = db_f.read()
