@@ -4,6 +4,7 @@ WORKDIR /app
 COPY . ./
 
 RUN pip install --user telebot
+RUN pip install --user keyboa
 # RUN pip install --no-cache-dir -r requirements.txt
 
 CMD [ "python", "./run.py" ]
