@@ -58,18 +58,53 @@ source env/bin/activate
 
 ```
 
-5. Создать Docker образ и запустить / остановить его
+5. Создать Docker образ, запустить / остановить его
 
 ```
+
 cd /Users/aakorneev/PycharmProjects/AlexxanderKorn 
+
+- На случай ошибки с кредами:
 vim ~/.docker/config.json 
-Здесь:
+- Здесь:
 Delete the line with credsStore from ~/.docker/config.json.
 Or rename credsStore to credStore
 
+*** Локально забильдить и запустить:
 docker build -t bot_app .
-
 docker run -d --name info-bot --restart=always bot_app
+docker run --dns=8.8.8.8 --dns=8.8.8.4 --dns=192.168.2.1 -d --name info-bot --restart=always alexxanderkorn/infobot
+
+*** Билд для DockerHub и Яндекс Cloud:
+- Забильдить в DockerHub:
+docker build -t alexxanderkorn/infobot .
+
+- Запушить в DockerHub:
+docker push alexxanderkorn/infobot
+
+- Проставить тег для образа в облаке:
+docker tag alexxanderkorn/infobot cr.yandex/b1gdh39cpm637gtpkhop/alexxanderkorn/infobot
+
+- Запушить в облако:
+docker push cr.yandex/b1gdh39cpm637gtpkhop/alexxanderkorn/infobot
+
+- Перезапустить консоль:
+source "/Users/aakorneev/.zshrc"
+
+- Запуск в облаке Яндекс:
+ssh alkorn@178.154.202.238
+
+- Аутентификация:
+curl -H Metadata-Flavor:Google 169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token | \
+cut -f1 -d',' | \
+cut -f2 -d':' | \
+tr -d '"' | \
+sudo docker login --username iam --password-stdin cr.yandex
+
+- Запуск образа:
+docker run --dns=8.8.8.8 --dns=8.8.8.4 --dns=192.168.2.1 --name info-bot --restart=always cr.yandex/crp076bjab1vv5rlg688/alexxanderkorn/infobot
+
+- Удалить контейнер и образ
 docker rm info-bot
 docker rmi bot_app
 
