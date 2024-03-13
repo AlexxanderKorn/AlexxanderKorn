@@ -70,39 +70,50 @@ vim ~/.docker/config.json
 Delete the line with credsStore from ~/.docker/config.json.
 Or rename credsStore to credStore
 
-*** Локально забильдить и запустить:
+*** Локально забилдить и запустить:
 docker build -t bot_app .
 docker run -d --name info-bot --restart=always bot_app
 docker run --dns=8.8.8.8 --dns=8.8.8.4 --dns=192.168.2.1 -d --name info-bot --restart=always alexxanderkorn/infobot
 
 *** Билд для DockerHub и Яндекс Cloud:
-- Забильдить в DockerHub:
+- Забилдить в DockerHub:
 docker build -t alexxanderkorn/infobot .
 
 - Запушить в DockerHub:
-docker push alexxanderkorn/infobot
+docker push alexxanderkorn/infobot:<номер тега>
 
 - Проставить тег для образа в облаке:
-docker tag alexxanderkorn/infobot cr.yandex/b1gdh39cpm637gtpkhop/alexxanderkorn/infobot
+. Спуллить образ:
+docker pull alexxanderkorn/infobot 
+. Проставить тег для Яндекс облака:
+sudo docker tag alexxanderkorn/infobot cr.yandex/<ID_REGISTRY>/alexxanderkorn/infobot:<номер тега>
 
-- Запушить в облако:
-docker push cr.yandex/b1gdh39cpm637gtpkhop/alexxanderkorn/infobot
 
 - Перезапустить консоль:
 source "/Users/aakorneev/.zshrc"
 
-- Запуск в облаке Яндекс:
+*** Запуск в облаке Яндекс:
+- Аутентификация:
 ssh alkorn@178.154.202.238
 
-- Аутентификация:
 curl -H Metadata-Flavor:Google 169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token | \
 cut -f1 -d',' | \
 cut -f2 -d':' | \
 tr -d '"' | \
 sudo docker login --username iam --password-stdin cr.yandex
 
-- Запуск образа:
-docker run --dns=8.8.8.8 --dns=8.8.8.4 --dns=192.168.2.1 --name info-bot --restart=always cr.yandex/crp076bjab1vv5rlg688/alexxanderkorn/infobot
+- Запушить образ в облако (из локальной консоли):
+sudo docker push cr.yandex/<ID_REGISTRY>/alexxanderkorn/infobot:<номер тега>
+<ID_REGISTRY> = crp076bjab1vv5rlg688
+
+Спуллить образ в облаке:
+sudo docker pull cr.yandex/<ID_REGISTRY>/alexxanderkorn/infobot:<номер тега>
+
+- Запуск образа в облаке:
+sudo docker run --dns=8.8.8.8 --dns=8.8.8.4 --dns=192.168.2.1 --name info-bot --restart=always cr.yandex/<ID_REGISTRY>/alexxanderkorn/infobot:<номер тега>
+
+- Остановить контейнер:
+- sudo docker stop <container id>
 
 - Удалить контейнер и образ
 docker rm info-bot

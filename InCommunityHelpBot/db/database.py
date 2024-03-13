@@ -61,6 +61,12 @@ class Database:
 
         return people
 
+    def other_info(self, other_name):
+        select_other = f"""SELECT * FROM other"""
+        other = execute_read_query(connection, select_other)
+
+        return other
+
     def bot_buttons(self, table):
         rec_count = execute_read_query(connection, f"""SELECT COUNT(*) FROM '{table}'""")
         rec_count_formatted = rec_count[0][0]
@@ -73,6 +79,9 @@ class Database:
             elif table == 'people':
                 tab_values = execute_read_query(connection,
                                                 f"""SELECT p_id_name, p_name FROM people WHERE id = '{i}'""")[0]
+            elif table == 'other':
+                tab_values = execute_read_query(connection,
+                                                f"""SELECT oth_id_name, oth_name FROM other WHERE id = '{i}'""")[0]
             else:
                 raise ValueError(f'Table {table} is not defined')
             buttons_names.update({tab_values[0]: tab_values[1]})
