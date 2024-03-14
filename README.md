@@ -62,6 +62,14 @@ source env/bin/activate
 
 ```
 
+1) Локально создать и забилдить образ
+2) Запушить в Docker
+3) Залогиниться в облако
+4) Спуллить в облаке образ из Докера
+5) проставить тег образу 
+6) Загрузить Docker-образ в репозиторий Container Registry (sudo docker push)
+7) Запустить образ в репозитории (sudo docker run)
+
 cd /Users/aakorneev/PycharmProjects/AlexxanderKorn 
 
 - На случай ошибки с кредами:
@@ -113,11 +121,11 @@ sudo docker pull cr.yandex/<ID_REGISTRY>/alexxanderkorn/infobot:<номер те
 sudo docker run --dns=8.8.8.8 --dns=8.8.8.4 --dns=192.168.2.1 --name info-bot --restart=always cr.yandex/<ID_REGISTRY>/alexxanderkorn/infobot:<номер тега>
 
 - Остановить контейнер:
-- sudo docker stop <container id>
+- sudo docker stop <container id> (например, sudo docker stop info-bot)
 
 - Удалить контейнер и образ
 docker rm info-bot
-docker rmi bot_app
+docker rmi bot_app (например, sudo docker rmi cr.yandex/crp076bjab1vv5rlg688/alexxanderkorn/infobot:latest)
 
 docker ps -a
 ```

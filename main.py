@@ -208,7 +208,7 @@ def bot_interaction(call):
 
         elif call.data == "back":
             init_mess = f'Что хотелось бы узнать?'
-            usr_name = UsrName.names['user_name']
+            usr_name = UsrName.name['user_name']
             if usr_name == usr_adm:
                 main_keyboard_shown = InlineKeyboardMarkup().add(button_church, button_address, button_other_addr)
             else:
