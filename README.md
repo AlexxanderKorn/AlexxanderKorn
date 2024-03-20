@@ -115,7 +115,7 @@ sudo docker push cr.yandex/<ID_REGISTRY>/alexxanderkorn/infobot:<номер те
 <ID_REGISTRY> = crp076bjab1vv5rlg688
 
 Спуллить образ в облаке:
-sudo docker pull cr.yandex/<ID_REGISTRY>/alexxanderkorn/infobot:<номер тега>
+sudo docker pull alexxanderkorn/infobot
 
 - Запуск образа в облаке:
 sudo docker run --dns=8.8.8.8 --dns=8.8.8.4 --dns=192.168.2.1 --name info-bot --restart=always cr.yandex/<ID_REGISTRY>/alexxanderkorn/infobot:<номер тега>

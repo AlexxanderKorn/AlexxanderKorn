@@ -40,12 +40,18 @@ class Database:
         self.conn = connection
         self.cursor = self.conn.cursor()
 
-    def p_access(self):
-        p_names = execute_read_query(connection,
-                                     f"""SELECT p_contact FROM people""")[0]
-        # print(p_names)
+    def people_adm_info(self, tg_name):
+        """Определение пользователей с расширенными возможностями
+        :param tg_name: 
+            тг-контакт
+        :return: 
+            словарь "контакт, привилег"
+        """
+        select_p_adm = f"""SELECT p_contact, p_adm FROM people
+        WHERE p_contact = '{tg_name}'"""
+        people_adm = execute_read_query(connection, select_p_adm)
 
-        return p_names
+        return people_adm
 
     def ch_info(self, ch_name):
         select_ch = f"""SELECT * FROM ch JOIN abbots a ON ch.abbot_id = a.id
@@ -62,7 +68,7 @@ class Database:
         return people
 
     def other_info(self, other_name):
-        select_other = f"""SELECT * FROM other"""
+        select_other = f"""SELECT * FROM other WHERE oth_id_name = '{other_name}'"""
         other = execute_read_query(connection, select_other)
 
         return other
