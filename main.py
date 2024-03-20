@@ -5,7 +5,7 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from InCommunityHelpBot.db.database import Database
 
 database = Database()
-usr_adm = 'alexander_korneev'
+
 
 class UsrName:
     """
@@ -23,8 +23,7 @@ InCommunityHelpBot = telebot.TeleBot(token)
 
 
 def bot_buttons_set(table: str):
-    """
-        Получение названий для кнопок из БД. Наборы кнопок соответствуют значениям полей в задаваемой таблице
+    """Получение названий для кнопок из БД. Наборы кнопок соответствуют значениям полей в задаваемой таблице
     :param table:
         Таблица с информацией об учреждениях или наших адресах
     :return:
@@ -49,13 +48,26 @@ main_keyboard = InlineKeyboardMarkup().add(button_church, button_address)
 button_back = InlineKeyboardButton(text='Вернуться', callback_data='back')
 keyboard_back = InlineKeyboardMarkup([[button_back]])
 
+def p_adm_data_define(user_name):
+    """Определение юзера с расширенными возможностями
+    :param user_name: 
+        тг-контакт
+    :return: 
+        флаг полномочий
+    """
+    p_user_select = database.people_adm_info(user_name)
+    p_adm_data = (p_user_select[0][1] if p_user_select else '')
+    
+    return p_adm_data
+
 
 @InCommunityHelpBot.message_handler(commands=['start'])
 def start_bot(message):
-    """
-        Приветствие и определение имени тг-контакта. Сохранение тг-контакта для последующего использования
-    :param message: Данные о пользователе и сообщении
-    :return: Главное меню
+    """Приветствие и определение имени тг-контакта. Сохранение тг-контакта для последующего использования
+    :param message:
+        Данные о пользователе и сообщении
+    :return:
+        Главное меню
     """
 
     user_name = message.from_user.username
@@ -64,7 +76,9 @@ def start_bot(message):
     user_full_name = f"{message.from_user.first_name}" if message.from_user.first_name else user_name
     start_mess = f"<b>{user_full_name}</b>, привет!\nЧто хотелось бы узнать?"
 
-    if user_name == usr_adm:
+    p_adm_data = p_adm_data_define(user_name)
+
+    if p_adm_data == 1:
         main_keyboard_shown = InlineKeyboardMarkup().add(button_church, button_address, button_other_addr)
     else:
         main_keyboard_shown = main_keyboard
@@ -73,8 +87,7 @@ def start_bot(message):
 
 
 def ch_data_set(ch_d: str):
-    """
-        Отформатированная информация по храмам из БД для вывода в боте
+    """Отформатированная информация по храмам из БД для вывода в боте
     :param ch_d:
         Таблица с храмами
     :return:
@@ -95,8 +108,7 @@ def ch_data_set(ch_d: str):
 
 
 def people_data_set(people_d: str):
-    """
-        Отформатированная информация по адресам из БД для вывода в боте
+    """Отформатированная информация по адресам из БД для вывода в боте
     :param people_d:
         Таблица с адресами
     :return:
@@ -104,10 +116,13 @@ def people_data_set(people_d: str):
     """
     # Имя тг-пользователя
     usr_name = UsrName.name['user_name']
+    # Определение привилегий
+    p_adm_data = p_adm_data_define(usr_name)
 
     p_data = (database.people_info(people_d)[0])
-    if usr_name == usr_adm and (p_data[7]) != 0:
-        p_car = f'<i>авто:</i>    {p_data[10]}  {p_data[11]}'
+
+    if p_adm_data == 1 and (p_data[7]) != 0:
+        p_car = f'<i>авто:</i>    {p_data[11]}  {p_data[12]}'
     else:
         p_car = ''
     contact = f'<a href="https://t.me/{p_data[4]}">{p_data[2]}</a>'
@@ -124,9 +139,9 @@ def people_data_set(people_d: str):
     )
     return p_set
 
+
 def other_data_set(other_d: str):
-    """
-        Отформатированная информация по разным адресам из БД для вывода в боте
+    """Отформатированная информация по разным адресам из БД для вывода в боте
     :param other_d:
         Таблица с адресами
     :return:
@@ -148,12 +163,12 @@ def other_data_set(other_d: str):
     )
     return other_set
 
+
 @InCommunityHelpBot.callback_query_handler(func=lambda call: True)
 def bot_interaction(call):
     info_ch_menu = bot_buttons_set('ch')
     ch_d = info_ch_menu[0]
     info_ch_keyboard = Keyboa(items=info_ch_menu[1])
-    # info_ch_keyboard = InlineKeyboardMarkup([info_ch_menu[1]]) # InlineKeyboardMarkup()  # InlineKeyboardMarkup([info_ch_menu[1]])
 
     info_people_menu = bot_buttons_set('people')
     people_d = info_people_menu[0]
@@ -162,6 +177,12 @@ def bot_interaction(call):
     info_other_menu = bot_buttons_set('other')
     other_d = info_other_menu[0]
     info_other_keyboard = Keyboa(items=info_other_menu[1])
+    
+    try:
+        usr_name = UsrName.name['user_name']
+    except KeyError:
+        InCommunityHelpBot.send_message(call.message.chat.id, 'Возникла ошибка. Отправьте сообщение /start',
+                                        parse_mode='html')
 
     if call.message:
         if call.data == "church":
@@ -173,15 +194,18 @@ def bot_interaction(call):
                                             reply_markup=info_ch_keyboard())
 
         elif call.data == "address":
-            address_mess = "Информация по адресам"
-            InCommunityHelpBot.send_message(call.message.chat.id,
-                                            address_mess,
-                                            parse_mode='html',
-                                            reply_markup=info_people_keyboard())
-            # else:
-            #     InCommunityHelpBot.send_message(call.message.chat.id, 'Пока у вас нет прав смотреть адреса', parse_mode='html',
-            #                                     reply_markup=main_keyboard)
-            
+            p_role_data = p_adm_data_define(usr_name)
+            if p_role_data in (0, 1):
+                address_mess = "Информация по адресам"
+                InCommunityHelpBot.send_message(call.message.chat.id,
+                                                address_mess,
+                                                parse_mode='html',
+                                                reply_markup=info_people_keyboard())
+            else:
+                InCommunityHelpBot.send_message(call.message.chat.id, 'Пока у вас нет прав смотреть адреса',
+                                                parse_mode='html',
+                                                reply_markup=keyboard_back)
+
         elif call.data == "other":
             other_mess = "Информация по разным местам"
             InCommunityHelpBot.send_message(call.message.chat.id,
@@ -199,7 +223,6 @@ def bot_interaction(call):
                                             people_data_set(call.data),
                                             parse_mode='html',
                                             reply_markup=keyboard_back)
-        
         elif call.data in other_d:
             InCommunityHelpBot.send_message(call.message.chat.id,
                                             other_data_set(call.data),
@@ -208,8 +231,14 @@ def bot_interaction(call):
 
         elif call.data == "back":
             init_mess = f'Что хотелось бы узнать?'
-            usr_name = UsrName.name['user_name']
-            if usr_name == usr_adm:
+            # Определение привилегий
+            try:
+                p_adm_data = p_adm_data_define(usr_name)
+            except UnboundLocalError:
+                usr_name = UsrName.name['user_name']
+                p_adm_data = p_adm_data_define(usr_name)
+
+            if p_adm_data == 1:
                 main_keyboard_shown = InlineKeyboardMarkup().add(button_church, button_address, button_other_addr)
             else:
                 main_keyboard_shown = main_keyboard
